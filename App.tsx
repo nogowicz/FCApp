@@ -13,6 +13,8 @@ function App() {
     <>
       <StatusBar
         barStyle='light-content'
+        translucent={true}
+        backgroundColor='transparent'
       />
       <Welcome />
     </>
