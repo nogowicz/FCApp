@@ -54,7 +54,7 @@ export default function Welcome() {
                     <Button
                         onPress={() => console.log("Zaloguj się")}
                         text='Zaloguj się'
-                        mode='simple'
+                        mode='filled'
                     />
 
                     <Text style={styles.contentContainerSectionTitleText}>LUB ZAREJESTRUJ SIĘ</Text>
