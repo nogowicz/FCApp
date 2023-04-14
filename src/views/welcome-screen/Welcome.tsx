@@ -6,12 +6,17 @@ import {
     ImageBackground,
     Dimensions,
     Keyboard,
-    TextInput
+    TextInput,
+    TouchableOpacity,
+    Text
 } from 'react-native'
 
-import { useEffect, useState } from 'react'
 
-import { colors, constants } from '../../styles';
+import { colors, constants, spacing, typography } from '../../styles';
+import Container from 'components/container';
+import BottomSheet from '@gorhom/bottom-sheet'
+import Button from 'components/button';
+import { useCallback, useMemo, useRef } from 'react';
 
 const { width } = Dimensions.get('window');
 
@@ -19,39 +24,43 @@ export const assets = [require('assets/images/background-img.png')]
 
 export default function Welcome() {
 
-    const [keyboardOffset, setKeyboardOffset] = useState(0);
+    // ref
+    const bottomSheetRef = useRef<BottomSheet>(null);
 
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-            setKeyboardOffset(e.endCoordinates.height);
-        });
-        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardOffset(0);
-        });
+    // variables
+    const snapPoints = useMemo(() => ['25%', '50%'], []);
 
-        return () => {
-            keyboardDidShowListener.remove();
-            keyboardDidHideListener.remove();
-        };
+    // callbacks
+    const handleSheetChanges = useCallback((index: number) => {
+        console.log('handleSheetChanges', index);
     }, []);
 
     return (
         <SafeAreaView style={styles.root}>
             <View style={styles.container}>
-                <ImageBackground
-                    source={assets[0]}
-                    style={[styles.image, { marginBottom: -keyboardOffset }]}
-
-                />
-                <KeyboardAvoidingView
-                    style={[
-                        styles.keyboardAvoidingView,
-                    ]}
-                >
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <TextInput style={{ backgroundColor: 'blue', width: '100%' }} />
+                <Container>
+                    <View style={styles.titleContainer}>
+                        <Text
+                            style={styles.titleText}
+                        >FC.APP</Text>
+                        <Text
+                            style={styles.subTitleText}
+                        >Witaj w Football Challenge</Text>
                     </View>
-                </KeyboardAvoidingView>
+                    <BottomSheet
+                        ref={bottomSheetRef}
+                        index={1}
+                        snapPoints={snapPoints}
+                        onChange={handleSheetChanges}
+                    >
+                    </BottomSheet>
+                    {/* <View style={styles.contentContainer}>
+                        <Text style={styles.contentContainerSectionTitleText}>MASZ JUŻ KONTO?</Text>
+                        <Button />
+                    </View> */}
+
+
+                </Container>
             </View>
         </SafeAreaView>
     )
@@ -65,15 +74,37 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.COLORS.BACKGROUND,
     },
-    image: {
-        zIndex: -1,
-        width,
-        height: '70%'
+    titleContainer: {
+        alignItems: 'center',
+        marginTop: spacing.SCALE_30,
+
     },
-    keyboardAvoidingView: {
-        flex: 1,
+    titleText: {
+        ...typography.FONT_BOLD,
+        color: colors.COLORS.TEXT,
+        fontWeight: typography.FONT_WEIGHT_BOLD,
+        fontSize: typography.FONT_SIZE_80,
+
+    },
+    subTitleText: {
+        ...typography.FONT_REGULAR,
+        color: colors.COLORS.TEXT,
+        fontWeight: typography.FONT_WEIGHT_REGULAR,
+        fontSize: typography.FONT_SIZE_16,
+    },
+    contentContainer: {
+        backgroundColor: colors.COLORS.BACKGROUND,
         borderTopLeftRadius: constants.BORDER_RADIUS.CONTAINER,
         borderTopRightRadius: constants.BORDER_RADIUS.CONTAINER,
-        backgroundColor: colors.COLORS.BACKGROUND,
+        marginTop: '60%',
+        alignItems: 'center',
+        paddingVertical: spacing.SCALE_20,
+        justifyContent: 'space-between',
+    },
+    contentContainerSectionTitleText: {
+        ...typography.FONT_REGULAR,
+        fontWeight: typography.FONT_WEIGHT_REGULAR,
+        color: colors.COLORS.TEXT,
+        fontSize: typography.FONT_SIZE_14
     },
 });
