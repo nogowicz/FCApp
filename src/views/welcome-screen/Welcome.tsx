@@ -11,16 +11,25 @@ import Container from 'components/container';
 import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet'
 import Button from 'components/button';
 import { useMemo, useRef } from 'react';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'views/navigation/Navigation';
+
 
 import GoogleIcon from 'assets/svg/icon-google.svg'
 import FacebookIcon from 'assets/svg/icon-facebook.svg'
 import AppleIcon from 'assets/svg/icon-apple.svg'
 import EmailIcon from 'assets/svg/icon-mail.svg'
+import { SCREENS } from 'views/navigation/constants';
 
+export type WelcomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'WELCOME'>;
 
 export const assets = [require('assets/images/background-img.png')]
 
-export default function Welcome() {
+type WelcomeProps = {
+    navigation: WelcomeScreenNavigationProp;
+}
+
+export default function Welcome({ navigation }: WelcomeProps) {
     // ref
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -83,7 +92,7 @@ export default function Welcome() {
 
 
                     <Button
-                        onPress={() => console.log("Zarejestruj się E-mailem")}
+                        onPress={() => navigation.navigate(SCREENS.AUTH.SIGN_UP.ID)}
                         text='Zarejestruj się E-mailem'
                         mode='outline'
                         icon={<EmailIcon />}

@@ -1,14 +1,11 @@
 import {
   StatusBar,
-
 } from 'react-native';
-import Welcome from 'views/welcome-screen';
+import { NavigationContainer } from '@react-navigation/native';
 
-
+import AuthStack from 'views/navigation/auth-stack/AuthStack';
 
 function App() {
-
-
   return (
     <>
       <StatusBar
@@ -16,7 +13,9 @@ function App() {
         translucent={true}
         backgroundColor='transparent'
       />
-      <Welcome />
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
     </>
   );
 }
