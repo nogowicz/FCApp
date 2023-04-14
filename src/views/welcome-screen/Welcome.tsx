@@ -2,38 +2,30 @@ import {
     SafeAreaView,
     StyleSheet,
     View,
-    KeyboardAvoidingView,
-    ImageBackground,
-    Dimensions,
-    Keyboard,
-    TextInput,
-    TouchableOpacity,
-    Text
+    Text,
 } from 'react-native'
 
 
 import { colors, constants, spacing, typography } from '../../styles';
 import Container from 'components/container';
-import BottomSheet from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet'
 import Button from 'components/button';
-import { useCallback, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
-const { width } = Dimensions.get('window');
+import GoogleIcon from 'assets/svg/icon-google.svg'
+import FacebookIcon from 'assets/svg/icon-facebook.svg'
+import AppleIcon from 'assets/svg/icon-apple.svg'
+import EmailIcon from 'assets/svg/icon-mail.svg'
+
 
 export const assets = [require('assets/images/background-img.png')]
 
 export default function Welcome() {
-
     // ref
-    const bottomSheetRef = useRef<BottomSheet>(null);
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
     // variables
-    const snapPoints = useMemo(() => ['25%', '50%'], []);
-
-    // callbacks
-    const handleSheetChanges = useCallback((index: number) => {
-        console.log('handleSheetChanges', index);
-    }, []);
+    const snapPoints = useMemo(() => ['55%'], []);
 
     return (
         <SafeAreaView style={styles.root}>
@@ -47,20 +39,58 @@ export default function Welcome() {
                             style={styles.subTitleText}
                         >Witaj w Football Challenge</Text>
                     </View>
-                    <BottomSheet
-                        ref={bottomSheetRef}
-                        index={1}
-                        snapPoints={snapPoints}
-                        onChange={handleSheetChanges}
-                    >
-                    </BottomSheet>
-                    {/* <View style={styles.contentContainer}>
-                        <Text style={styles.contentContainerSectionTitleText}>MASZ JUŻ KONTO?</Text>
-                        <Button />
-                    </View> */}
-
-
                 </Container>
+                <BottomSheet
+                    style={styles.bottomSheet}
+                    ref={bottomSheetModalRef}
+                    snapPoints={snapPoints}
+                    backgroundStyle={styles.bottomSheetBackground}
+                    handleIndicatorStyle={{ backgroundColor: colors.COLORS.BACKGROUND }}
+
+                >
+
+                    <Text style={styles.contentContainerSectionTitleText}>MASZ JUŻ KONTO?</Text>
+
+                    <Button
+                        onPress={() => console.log("Zaloguj się")}
+                        text='Zaloguj się'
+                        mode='simple'
+                    />
+
+                    <Text style={styles.contentContainerSectionTitleText}>LUB ZAREJESTRUJ SIĘ</Text>
+
+                    <Button
+                        onPress={() => console.log("Użyj konta Google")}
+                        text='Użyj konta Google'
+                        mode='outline'
+                        icon={<GoogleIcon />}
+                    />
+
+                    <Button
+                        onPress={() => console.log("Użyj konta Faceboo")}
+                        text='Użyj konta Facebook'
+                        mode='outline'
+                        icon={<FacebookIcon />}
+                    />
+
+
+                    <Button
+                        onPress={() => console.log("Użyj konta Apple")}
+                        text='Użyj konta Apple'
+                        mode='outline'
+                        icon={<AppleIcon />}
+                    />
+
+
+                    <Button
+                        onPress={() => console.log("Zarejestruj się E-mailem")}
+                        text='Zarejestruj się E-mailem'
+                        mode='outline'
+                        icon={<EmailIcon />}
+                    />
+
+
+                </BottomSheet>
             </View>
         </SafeAreaView>
     )
@@ -72,7 +102,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: colors.COLORS.BACKGROUND,
+        backgroundColor: colors.COLORS.BACKGROUND
     },
     titleContainer: {
         alignItems: 'center',
@@ -94,17 +124,23 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         backgroundColor: colors.COLORS.BACKGROUND,
-        borderTopLeftRadius: constants.BORDER_RADIUS.CONTAINER,
-        borderTopRightRadius: constants.BORDER_RADIUS.CONTAINER,
-        marginTop: '60%',
-        alignItems: 'center',
-        paddingVertical: spacing.SCALE_20,
-        justifyContent: 'space-between',
     },
     contentContainerSectionTitleText: {
         ...typography.FONT_REGULAR,
         fontWeight: typography.FONT_WEIGHT_REGULAR,
         color: colors.COLORS.TEXT,
-        fontSize: typography.FONT_SIZE_14
+        fontSize: typography.FONT_SIZE_14,
+        textAlign: 'center',
+        marginVertical: spacing.SCALE_16
+    },
+    bottomSheet: {
+        paddingHorizontal: spacing.SCALE_20,
+        alignContent: 'center',
+        justifyContent: 'space-between',
+    },
+    bottomSheetBackground: {
+        backgroundColor: colors.COLORS.BACKGROUND,
+        borderTopLeftRadius: constants.BORDER_RADIUS.CONTAINER,
+        borderTopRightRadius: constants.BORDER_RADIUS.CONTAINER,
     },
 });

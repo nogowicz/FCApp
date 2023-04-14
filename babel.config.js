@@ -13,7 +13,8 @@ module.exports = {
             '@views': './views',
           },
         },
-    ]
+      ],
+      'react-native-reanimated/plugin',
 ],
 };
 

@@ -41,15 +41,18 @@ export default function Container({ children }: ContainerProps) {
         <View style={{
             flex: 1,
             backgroundColor: colors.COLORS.BACKGROUND,
+
         }}>
 
-            <ImageBackground source={assets[0]} style={
-                {
-                    marginBottom: -keyboardOffset,
-                    width,
-                    height: '70%',
-                    zIndex: -1,
-                }}
+            <ImageBackground
+
+                source={assets[0]} style={
+                    {
+                        marginBottom: 2 * (-keyboardOffset),
+                        width,
+                        height: '70%',
+                        zIndex: -1,
+                    }}
             >
 
                 {children}

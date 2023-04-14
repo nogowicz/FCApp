@@ -1,46 +1,121 @@
 import {
-    StyleSheet,
     TouchableOpacity,
+    StyleSheet,
     Text,
+    View,
 } from 'react-native'
+import { colors, constants, spacing, typography } from 'styles';
+import { ReactNode } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
-import { colors } from 'styles';
 
-export default function Button() {
+type ButtonProps = {
+    text: string;
+    activeOpacity?: number;
+    mode: 'outline' | 'filled' | 'simple';
+    onPress: () => any;
+    icon?: ReactNode;
+}
+
+export default function Button({ text, activeOpacity = 0.7, mode, onPress, icon }: ButtonProps) {
+    if (mode === 'outline') {
+        return (
+            <TouchableOpacity
+                activeOpacity={activeOpacity}
+                onPress={onPress}
+                style={styles.outlineContainer}
+            >
+                <View style={styles.outlinedButtonLeftContainer}>
+                    {icon}
+                </View>
+                <Text style={styles.buttonText}>{text}</Text>
+                <View style={styles.outlinedButtonRightContainer} />
+            </TouchableOpacity>
+        );
+    } else if (mode === 'filled') {
+        return (
+            <TouchableOpacity
+                activeOpacity={activeOpacity}
+                onPress={onPress}
+                style={styles.filledContainer}
+            >
+                <LinearGradient
+                    colors={[colors.COLORS.SECONDARY, colors.COLORS.PRIMARY]}
+                    style={styles.linearGradientContainer}
+                    start={{ x: 0, y: 1 }}
+                    end={{ x: 1, y: 1 }}
+                >
+                    <View style={styles.outlinedButtonLeftContainer} />
+                    <Text style={styles.filledButtonText}>{text}</Text>
+                    <View style={styles.outlinedButtonRightContainer} />
+                </LinearGradient>
+            </TouchableOpacity>
+        );
+    }
+
     return (
         <TouchableOpacity
-            style={styles.container}
+            activeOpacity={activeOpacity}
+            style={styles.simpleButtonContainer}
         >
-            <LinearGradient
-                colors={[
-                    colors.COLORS.PRIMARY,
-                    colors.COLORS.TEXT,
-
-                ]}
-                style={styles.linearGradient}
-            >
-                <Text style={styles.buttonText}>
-                    Sign in with Facebook
-                </Text>
-            </LinearGradient>
+            <Text style={styles.buttonText}>{text}</Text>
         </TouchableOpacity>
-    );
+    )
+
 }
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
-    linearGradient: {
+    outlineContainer: {
+        borderWidth: 1,
+        borderColor: colors.COLORS.SECONDARY,
+        borderRadius: constants.BORDER_RADIUS.BUTTON,
         flexDirection: 'row',
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: spacing.SCALE_8,
+        paddingHorizontal: spacing.SCALE_12,
+        marginVertical: spacing.SCALE_8,
     },
     buttonText: {
-        fontSize: 18,
-        textAlign: 'center',
-        color: '#ffffff',
+        ...typography.FONT_REGULAR,
+        color: colors.COLORS.HINT,
+        fontWeight: typography.FONT_WEIGHT_REGULAR,
+        fontSize: typography.FONT_SIZE_16,
     },
+    outlinedButtonLeftContainer: {
+        flex: 1,
+    },
+    outlinedButtonRightContainer: {
+        flex: 1,
+    },
+    filledContainer: {
+        borderRadius: constants.BORDER_RADIUS.BUTTON,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+
+    },
+    linearGradientContainer: {
+        flex: 1,
+        borderRadius: constants.BORDER_RADIUS.BUTTON,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: spacing.SCALE_12,
+        paddingHorizontal: spacing.SCALE_12,
+        marginVertical: spacing.SCALE_8,
+        elevation: 5,
+        shadowColor: colors.COLORS.PRIMARY,
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.3,
+        shadowRadius: constants.BORDER_RADIUS.BUTTON,
+    },
+    filledButtonText: {
+        ...typography.FONT_BOLD,
+        color: colors.COLORS.TEXT,
+        fontWeight: typography.FONT_WEIGHT_BOLD,
+        fontSize: typography.FONT_SIZE_18,
+    },
+    simpleButtonContainer: {
+        alignItems: 'center'
+    }
 });

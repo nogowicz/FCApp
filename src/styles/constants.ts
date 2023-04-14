@@ -1,5 +1,5 @@
 export const BORDER_RADIUS = {
-  BUTTON: 20,
+  BUTTON: 10,
   INPUT: 20,
   CONTAINER: 20,
 };
