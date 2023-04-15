@@ -1,7 +1,7 @@
 
 import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet';
 import Container from 'components/container/Container';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -16,8 +16,10 @@ import { colors, constants, spacing, typography } from 'styles';
 import ArrowLeft from 'assets/svg/arrow-left.svg'
 import Person from 'assets/svg/icon-user-form.svg'
 import Button from 'components/button';
+import StepsWidget from 'components/steps-widget/StepsWidget';
 
 export default function Signup() {
+    const [step, setStep] = useState(1)
     // ref
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -50,9 +52,15 @@ export default function Signup() {
                             keyboardType="default"
                             children={<Person />}
                         />
+
+                        <StepsWidget
+                            step={step}
+                            steps={4}
+                        />
+
                         <Button
                             text="Dalej"
-                            onPress={() => console.log('Dalej')}
+                            onPress={() => setStep(step => step + 1)}
                             mode='filled'
                         />
                     </View>
