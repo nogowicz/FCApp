@@ -15,10 +15,13 @@ import { FONT_WEIGHT_REGULAR } from 'styles/typography';
 
 type TextFieldProps = {
     label: string;
-    error?: any;
     children?: ReactNode;
     keyboardType?: TextInputProps['keyboardType'];
     props?: TextInputProps;
+    value: string,
+    onBlur?: () => void,
+    onChangeText: (value: any) => void,
+    error?: any;
 };
 
 export default function TextField({
@@ -45,8 +48,11 @@ export default function TextField({
                 ]}>
                 {children}
                 <TextInput
-                    style={styles.input}
                     {...props}
+                    style={styles.input}
+                    keyboardType={keyboardType}
+                    onFocus={() => setFocus(true)}
+                    onBlur={() => setFocus(false)}
                 />
             </View>
             {error && <Text style={styles.errorMessage}>{error?.message}</Text>}
@@ -69,6 +75,7 @@ const styles = StyleSheet.create({
         color: colors.COLORS.TEXT,
         fontSize: typography.FONT_SIZE_16,
         marginHorizontal: spacing.SCALE_12,
+        width: '90%'
     },
     inputContainer: {
         borderWidth: 1.5,
