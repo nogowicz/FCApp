@@ -4,4 +4,5 @@ export const COLORS = {
   TEXT: '#FFFFFF',
   BACKGROUND: '#251F45',
   HINT: '#EAEAEA',
+  ERROR: '#B90E0A',
 };

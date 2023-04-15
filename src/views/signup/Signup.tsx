@@ -9,16 +9,20 @@ import {
     Text
 } from 'react-native'
 
+import TextField from 'components/text-field';
+
 import { colors, constants, spacing, typography } from 'styles';
 
 import ArrowLeft from 'assets/svg/arrow-left.svg'
+import Person from 'assets/svg/icon-user-form.svg'
+import Button from 'components/button';
 
 export default function Signup() {
     // ref
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
     // variables
-    const snapPoints = useMemo(() => ['80%'], []);
+    const snapPoints = useMemo(() => ['70%'], []);
 
     return (
         <SafeAreaView style={styles.root}>
@@ -33,14 +37,25 @@ export default function Signup() {
                     </View>
                 </Container>
                 <BottomSheet
-                    style={styles.bottomSheet}
                     ref={bottomSheetModalRef}
                     snapPoints={snapPoints}
                     backgroundStyle={styles.bottomSheetBackground}
                     handleIndicatorStyle={{ backgroundColor: colors.COLORS.BACKGROUND }}
 
                 >
-                    <Text style={styles.contentContainerSectionTitleText}>Utwórz konto</Text>
+                    <View style={styles.bottomSheet}>
+                        <Text style={styles.contentContainerSectionTitleText}>Utwórz konto</Text>
+                        <TextField
+                            label="Imię i nazwisko"
+                            keyboardType="default"
+                            children={<Person />}
+                        />
+                        <Button
+                            text="Dalej"
+                            onPress={() => console.log('Dalej')}
+                            mode='filled'
+                        />
+                    </View>
 
                 </BottomSheet>
             </View>
@@ -58,6 +73,7 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
         marginTop: spacing.SCALE_40,
         paddingHorizontal: spacing.SCALE_20,
@@ -71,9 +87,11 @@ const styles = StyleSheet.create({
 
     },
     bottomSheet: {
+        flex: 1,
         paddingHorizontal: spacing.SCALE_20,
         alignContent: 'center',
         justifyContent: 'space-between',
+        marginVertical: spacing.SCALE_20,
     },
     bottomSheetBackground: {
         backgroundColor: colors.COLORS.BACKGROUND,
@@ -92,6 +110,5 @@ const styles = StyleSheet.create({
         color: colors.COLORS.TEXT,
         fontSize: typography.FONT_SIZE_18,
         textAlign: 'center',
-        marginVertical: spacing.SCALE_16
     },
 });
