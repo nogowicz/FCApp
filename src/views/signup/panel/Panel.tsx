@@ -26,7 +26,9 @@ export default function Panel({
     return (
         <View style={styles.bottomSheet}>
             <Text style={styles.contentContainerSectionTitleText}>Utwórz konto</Text>
-            {textField}
+            <View>
+                {textField}
+            </View>
 
             <StepsWidget
                 step={step}

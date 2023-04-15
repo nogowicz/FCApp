@@ -37,6 +37,10 @@ type SignupProps = {
 export default function Signup({ navigation }: SignupProps) {
     const [page, setPage] = useState(0);
 
+    function handlePageWithError(page: number) {
+        setPage(page);
+    }
+
     function handleNextPage() {
         setPage(prevPage => prevPage + 1);
     }
@@ -48,7 +52,7 @@ export default function Signup({ navigation }: SignupProps) {
 
     const snapPoints = useMemo(() => ['70%'], []);
 
-    const pages: PagesArrayType = preparePages({ navigation, handleNextPage })
+    const pages: PagesArrayType = preparePages({ navigation, handleNextPage, handlePageWithError })
 
     return (
         <SafeAreaView style={styles.root}>

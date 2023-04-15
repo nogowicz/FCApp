@@ -22,6 +22,7 @@ type TextFieldProps = {
     onBlur?: () => void,
     onChangeText: (value: any) => void,
     error?: any;
+    secureTextEntry?: boolean
 };
 
 export default function TextField({

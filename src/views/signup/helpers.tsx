@@ -1,8 +1,11 @@
 import {
     Dispatch,
     SetStateAction,
+    useEffect,
 } from "react"
 import { SignupScreenNavigationProp } from "./Signup"
+
+
 
 import Person from 'assets/svg/icon-user-form.svg'
 import Phone from 'assets/svg/icon-phone-form.svg'
@@ -13,19 +16,20 @@ import Lock from 'assets/svg/icon-lock-form.svg'
 import TextField from "components/text-field"
 import Button from "components/button"
 import { Controller, useForm } from "react-hook-form";
-import { SCREENS } from "views/navigation/constants"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./signupValidationSchema"
-import { View } from "react-native"
+import { View, Pressable } from "react-native"
 
 export type PreparePagesType = {
     navigation: SignupScreenNavigationProp,
     handleNextPage: Dispatch<SetStateAction<number>>
+    handlePageWithError: Function,
 }
 
 export function preparePages({
     navigation,
     handleNextPage,
+    handlePageWithError
 }: PreparePagesType) {
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -37,15 +41,26 @@ export function preparePages({
         }
     });
 
-    type OnSubmitProps = {
-        name: string;
-        phone: string;
-        mail: string;
-        password: string;
+
+
+    const onSubmit = (data: any) => console.log(data);
+
+    if (errors) {
+        useEffect(() => {
+            if (errors.name) {
+                handlePageWithError(0);
+            } else if (errors.phone) {
+                handlePageWithError(1);
+            } else if (errors.mail) {
+                handlePageWithError(2);
+            } else if (errors.password) {
+                handlePageWithError(3);
+            }
+
+        }, [errors]);
     }
 
 
-    const onSubmit = (data: OnSubmitProps) => console.log(data);
 
     return [
         {
@@ -153,7 +168,8 @@ export function preparePages({
         {
             id: 'password',
             textField: (
-                <>
+                //Pressable is used instead of View due to a strange bug that occurs when rendering forms.
+                <Pressable>
                     <Controller
                         name='password'
                         control={control}
@@ -167,18 +183,18 @@ export function preparePages({
                                 children={<Lock />}
                                 value={value}
                                 onBlur={onBlur}
+                                secureTextEntry={true}
                                 onChangeText={onChange}
                                 error={errors.password}
 
                             />
                         )}
                     />
-                </>
+                </Pressable>
             ),
             button: (
                 <Button
                     text="Dalej"
-                    //@ts-ignore
                     onPress={handleSubmit(onSubmit)}
                     mode='filled'
                 />
