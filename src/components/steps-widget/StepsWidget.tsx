@@ -6,11 +6,12 @@ import {
 import { colors, spacing, typography } from 'styles';
 
 import ProgressBar from 'components/progress-bar';
+import { PagesArrayType } from 'views/signup/Signup';
 
 
 type StepsWidgetProps = {
     step: number,
-    steps: number,
+    steps: PagesArrayType,
 }
 
 export default function StepsWidget({
@@ -20,22 +21,21 @@ export default function StepsWidget({
 ) {
 
     return (
-        <View style={styles.container}>
+        <View>
             <View style={styles.upperContainer}>
                 <Text style={styles.stepText}>Krok:</Text>
                 <View>
-                    <Text style={styles.stepCounterText}>{step}/{steps}</Text>
+                    <Text style={styles.stepCounterText}>{step}/{steps.length}</Text>
                 </View>
             </View>
             <View>
-                <ProgressBar step={step} steps={steps} height={15} />
+                <ProgressBar step={step} steps={steps.length} height={15} />
             </View>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    container: {},
     upperContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',

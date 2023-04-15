@@ -6,25 +6,49 @@ import {
     SafeAreaView,
     StyleSheet,
     View,
-    Text
+    Text,
+    TouchableOpacity,
 } from 'react-native'
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'views/navigation/Navigation';
 
-import TextField from 'components/text-field';
 
 import { colors, constants, spacing, typography } from 'styles';
 
 import ArrowLeft from 'assets/svg/arrow-left.svg'
-import Person from 'assets/svg/icon-user-form.svg'
-import Button from 'components/button';
-import StepsWidget from 'components/steps-widget/StepsWidget';
+import { preparePages } from './helpers';
+import Panel from './panel';
 
-export default function Signup() {
-    const [step, setStep] = useState(1)
-    // ref
+type PageType = {
+    id: string,
+    textField: JSX.Element,
+    button: JSX.Element,
+}
+
+export type PagesArrayType = PageType[];
+
+
+export type SignupScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SIGN_UP'>;
+
+type SignupProps = {
+    navigation: SignupScreenNavigationProp;
+}
+
+export default function Signup({ navigation }: SignupProps) {
+    const [page, setPage] = useState(0);
+
+    function handleNextPage() {
+        setPage(prevPage => prevPage + 1);
+    }
+    function handleBack() {
+        setPage(prevPage => prevPage - 1);
+    }
+
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-    // variables
     const snapPoints = useMemo(() => ['70%'], []);
+
+    const pages: PagesArrayType = preparePages({ navigation, handleNextPage })
 
     return (
         <SafeAreaView style={styles.root}>
@@ -32,7 +56,18 @@ export default function Signup() {
                 <Container>
                     <View style={styles.titleContainer}>
                         <View style={styles.titleLeftContainer}>
-                            <ArrowLeft />
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                onPress={() => {
+                                    if (page === 0) {
+                                        navigation.goBack();
+                                    } else {
+                                        handleBack();
+                                    }
+                                }}
+                            >
+                                <ArrowLeft />
+                            </TouchableOpacity>
                         </View>
                         <Text style={styles.titleText}>FC.APP</Text>
                         <View style={styles.titleRightContainer} />
@@ -45,25 +80,11 @@ export default function Signup() {
                     handleIndicatorStyle={{ backgroundColor: colors.COLORS.BACKGROUND }}
 
                 >
-                    <View style={styles.bottomSheet}>
-                        <Text style={styles.contentContainerSectionTitleText}>Utwórz konto</Text>
-                        <TextField
-                            label="Imię i nazwisko"
-                            keyboardType="default"
-                            children={<Person />}
-                        />
-
-                        <StepsWidget
-                            step={step}
-                            steps={4}
-                        />
-
-                        <Button
-                            text="Dalej"
-                            onPress={() => setStep(step => step + 1)}
-                            mode='filled'
-                        />
-                    </View>
+                    <Panel
+                        {...pages[page]}
+                        step={page + 1}
+                        steps={pages}
+                    />
 
                 </BottomSheet>
             </View>
@@ -94,13 +115,7 @@ const styles = StyleSheet.create({
         fontSize: 55,
 
     },
-    bottomSheet: {
-        flex: 1,
-        paddingHorizontal: spacing.SCALE_20,
-        alignContent: 'center',
-        justifyContent: 'space-between',
-        marginVertical: spacing.SCALE_20,
-    },
+
     bottomSheetBackground: {
         backgroundColor: colors.COLORS.BACKGROUND,
         borderTopLeftRadius: constants.BORDER_RADIUS.CONTAINER,
@@ -112,11 +127,5 @@ const styles = StyleSheet.create({
     titleRightContainer: {
         flex: 1,
     },
-    contentContainerSectionTitleText: {
-        ...typography.FONT_REGULAR,
-        fontWeight: typography.FONT_WEIGHT_REGULAR,
-        color: colors.COLORS.TEXT,
-        fontSize: typography.FONT_SIZE_18,
-        textAlign: 'center',
-    },
+
 });

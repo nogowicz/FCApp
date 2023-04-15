@@ -5,14 +5,14 @@ import {
     View,
 } from 'react-native'
 import { colors, constants, spacing, typography } from 'styles';
-import { ReactNode } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 
 type ButtonProps = {
     text: string;
     activeOpacity?: number;
     mode: 'outline' | 'filled' | 'simple';
-    onPress: () => any;
+    onPress: Dispatch<SetStateAction<number>> | any;
     icon?: ReactNode;
 }
 
