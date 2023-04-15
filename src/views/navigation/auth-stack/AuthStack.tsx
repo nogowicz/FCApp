@@ -4,6 +4,7 @@ import { SCREENS } from '../constants';
 
 import Welcome from 'views/welcome-screen';
 import Signup from 'views/signup/Signup';
+import AccountType from 'views/account-type';
 
 export default function AuthStack() {
     const Stack = createNativeStackNavigator();
@@ -24,6 +25,11 @@ export default function AuthStack() {
             <Stack.Screen
                 name={SCREENS.AUTH.SIGN_UP.ID}
                 component={Signup}
+            />
+
+            <Stack.Screen
+                name={SCREENS.AUTH.ACCOUNT_TYPE.ID}
+                component={AccountType}
             />
 
         </Stack.Navigator>

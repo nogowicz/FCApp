@@ -6,8 +6,8 @@ export const SCREENS = {
     SIGN_UP: {
       ID: 'SIGN_UP',
     },
-    TYPE: {
-      ID: 'TYPE',
+    ACCOUNT_TYPE: {
+      ID: 'ACCOUNT_TYPE',
     },
   },
 };

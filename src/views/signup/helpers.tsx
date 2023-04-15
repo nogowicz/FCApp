@@ -15,6 +15,7 @@ import Lock from 'assets/svg/icon-lock-form.svg'
 
 import TextField from "components/text-field"
 import Button from "components/button"
+import { SCREENS } from "views/navigation/constants"
 
 export type PreparePagesType = {
     navigation: SignupScreenNavigationProp,
@@ -89,7 +90,7 @@ export function preparePages({
             button: (
                 <Button
                     text="Dalej"
-                    onPress={() => console.log("dalej")}
+                    onPress={() => navigation.navigate(SCREENS.AUTH.ACCOUNT_TYPE.ID)}
                     mode='filled'
                 />
             )
