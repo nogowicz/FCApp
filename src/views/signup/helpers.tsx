@@ -4,7 +4,10 @@ import {
     useEffect,
     useState,
 } from "react"
-import { SignupScreenNavigationProp } from "./Signup"
+import {
+    View,
+    Pressable,
+} from "react-native"
 
 
 
@@ -13,13 +16,13 @@ import Phone from 'assets/svg/icon-phone-form.svg'
 import Mail from 'assets/svg/icon-mail-form.svg'
 import Lock from 'assets/svg/icon-lock-form.svg'
 
-
 import TextField from "components/text-field"
 import Button from "components/button"
+
+import { SignupScreenNavigationProp } from "./Signup"
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./signupValidationSchema"
-import { View, Pressable } from "react-native"
 import { SCREENS } from "views/navigation/constants"
 
 export type PreparePagesType = {

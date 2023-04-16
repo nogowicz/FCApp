@@ -12,11 +12,11 @@ import {
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'views/navigation/Navigation';
 
-
 import { colors, constants, spacing, typography } from 'styles';
+import { preparePages } from './helpers';
+
 
 import ArrowLeft from 'assets/svg/arrow-left.svg'
-import { preparePages } from './helpers';
 import Panel from './panel';
 
 type PageType = {
@@ -77,6 +77,7 @@ export default function Signup({ navigation }: SignupProps) {
                         <View style={styles.titleRightContainer} />
                     </View>
                 </Container>
+
                 <BottomSheet
                     ref={bottomSheetModalRef}
                     snapPoints={snapPoints}
@@ -92,7 +93,9 @@ export default function Signup({ navigation }: SignupProps) {
 
                 </BottomSheet>
             </View>
+
         </SafeAreaView>
+
     );
 }
 

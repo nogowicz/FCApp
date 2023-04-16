@@ -3,9 +3,11 @@ import {
     View,
     StyleSheet,
 } from "react-native";
+
 import { PagesArrayType } from "../Signup";
-import StepsWidget from "components/steps-widget";
 import { spacing, typography, colors } from "styles";
+
+import StepsWidget from "components/steps-widget";
 
 type PanelProps = {
     id: string,

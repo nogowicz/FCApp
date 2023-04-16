@@ -1,5 +1,3 @@
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'views/navigation/Navigation';
 import {
     StyleSheet,
     View,
@@ -14,13 +12,17 @@ import {
     useRef,
     useMemo,
 } from 'react'
-import Container from 'components/container';
 
-import ArrowLeft from 'assets/svg/arrow-left.svg'
-import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { colors, spacing, typography, constants } from 'styles';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'views/navigation/Navigation';
+
+
+import Container from 'components/container';
+import ArrowLeft from 'assets/svg/arrow-left.svg'
 import Button from 'components/button';
 import AccountTypeOption from 'components/account-type-option';
+import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 export const assets = [
     require('assets/images/sygnet-logo.png'),

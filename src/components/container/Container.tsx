@@ -2,6 +2,7 @@ import {
     View,
     ImageBackground,
     Dimensions,
+    StyleSheet,
 } from 'react-native'
 import { colors } from 'styles';
 import {
@@ -30,11 +31,7 @@ export default function Container({ children }: ContainerProps) {
             <ImageBackground
 
                 source={assets[0]}
-                style={{
-                    width,
-                    height: '70%',
-                    zIndex: -1,
-                }}
+                style={styles.imageBackground}
             >
 
                 {children}
@@ -45,3 +42,12 @@ export default function Container({ children }: ContainerProps) {
         </View >
     );
 }
+
+const styles = StyleSheet.create({
+    imageBackground: {
+        width,
+        height: '70%',
+        zIndex: -1,
+    },
+
+});
