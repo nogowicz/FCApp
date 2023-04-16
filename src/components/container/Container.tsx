@@ -2,12 +2,9 @@ import {
     View,
     ImageBackground,
     Dimensions,
-    Keyboard,
 } from 'react-native'
 import { colors } from 'styles';
 import {
-    useEffect,
-    useState,
     ReactNode,
 } from 'react';
 
@@ -22,21 +19,7 @@ type ContainerProps = {
 
 export default function Container({ children }: ContainerProps) {
 
-    const [keyboardOffset, setKeyboardOffset] = useState(0);
 
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-            setKeyboardOffset(e.endCoordinates.height);
-        });
-        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardOffset(0);
-        });
-
-        return () => {
-            keyboardDidShowListener.remove();
-            keyboardDidHideListener.remove();
-        };
-    }, []);
     return (
         <View style={{
             flex: 1,
@@ -46,13 +29,12 @@ export default function Container({ children }: ContainerProps) {
 
             <ImageBackground
 
-                source={assets[0]} style={
-                    {
-                        marginBottom: 2 * (-keyboardOffset),
-                        width,
-                        height: '70%',
-                        zIndex: -1,
-                    }}
+                source={assets[0]}
+                style={{
+                    width,
+                    height: '70%',
+                    zIndex: -1,
+                }}
             >
 
                 {children}
@@ -60,6 +42,6 @@ export default function Container({ children }: ContainerProps) {
             </ImageBackground>
 
 
-        </View>
+        </View >
     );
 }

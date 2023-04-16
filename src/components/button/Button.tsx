@@ -99,6 +99,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        shadowColor: colors.COLORS.PRIMARY,
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.3,
+        shadowRadius: constants.BORDER_RADIUS.BUTTON,
 
     },
     linearGradientContainer: {
@@ -110,11 +114,7 @@ const styles = StyleSheet.create({
         paddingVertical: spacing.SCALE_12,
         paddingHorizontal: spacing.SCALE_12,
         marginVertical: spacing.SCALE_8,
-        elevation: 5,
-        shadowColor: colors.COLORS.PRIMARY,
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.3,
-        shadowRadius: constants.BORDER_RADIUS.BUTTON,
+
     },
     filledButtonText: {
         ...typography.FONT_BOLD,
