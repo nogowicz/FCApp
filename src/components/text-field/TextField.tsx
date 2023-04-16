@@ -22,7 +22,8 @@ type TextFieldProps = {
     onBlur?: () => void,
     onChangeText: (value: any) => void,
     error?: any;
-    secureTextEntry?: boolean
+    secureTextEntry?: boolean,
+    backendError?: string
 };
 
 export default function TextField({
@@ -30,6 +31,7 @@ export default function TextField({
     error,
     children,
     keyboardType,
+    backendError,
     ...props
 }: TextFieldProps) {
     const [focus, setFocus] = useState(false);
@@ -39,13 +41,13 @@ export default function TextField({
                 <Text
                     style={[
                         styles.label,
-                        error && styles.labelWithError
+                        (backendError || error) && styles.labelWithError
                     ]}>{label}</Text> : null}
             <View
                 style={[
                     styles.inputContainer,
                     focus && styles.focus,
-                    error && styles.error
+                    (backendError || error) && styles.error
                 ]}>
                 {children}
                 <TextInput
@@ -54,9 +56,11 @@ export default function TextField({
                     keyboardType={keyboardType}
                     onFocus={() => setFocus(true)}
                     onBlur={() => setFocus(false)}
+
                 />
             </View>
             {error && <Text style={styles.errorMessage}>{error?.message}</Text>}
+            {backendError && <Text style={styles.errorMessage}>{backendError}</Text>}
         </View>
     );
 };

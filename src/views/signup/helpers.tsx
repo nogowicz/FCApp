@@ -2,6 +2,7 @@ import {
     Dispatch,
     SetStateAction,
     useEffect,
+    useState,
 } from "react"
 import { SignupScreenNavigationProp } from "./Signup"
 
@@ -19,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./signupValidationSchema"
 import { View, Pressable } from "react-native"
+import { SCREENS } from "views/navigation/constants"
 
 export type PreparePagesType = {
     navigation: SignupScreenNavigationProp,
@@ -31,6 +33,11 @@ export function preparePages({
     handleNextPage,
     handlePageWithError
 }: PreparePagesType) {
+    const [backendErrorMessageName, setBackendErrorMessageName] = useState();
+    const [backendErrorMessagePhone, setBackendErrorMessagePhone] = useState();
+    const [backendErrorMessageEmail, setBackendErrorMessageEmail] = useState();
+    const [backendErrorMessagePassword, setBackendErrorMessagePassword] = useState();
+
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
@@ -43,7 +50,65 @@ export function preparePages({
 
 
 
-    const onSubmit = (data: any) => console.log(data);
+    type FormDataProps = {
+        name: string;
+        phone: string;
+        mail: string;
+        password: string;
+    }
+
+
+
+    const onSubmit = async (formData: FormDataProps) => {
+
+        try {
+            const [firstName, lastName] = formData.name.split(' ');
+            const formDataModified = {
+                first_name: firstName,
+                last_name: lastName,
+                phone: formData.phone,
+                email: formData.mail,
+                password1: formData.password,
+                password2: formData.password
+            }
+
+            const response = await fetch('https://api.dev.footballchallengeapp.com/auth/registration/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formDataModified),
+            });
+
+            const data = await response.json();
+            console.log("DATA: ", data);
+            console.log("RESPONSE: ", response);
+
+            if (!response.ok) {
+                if (data.first_name || data.last_name) {
+                    setBackendErrorMessageName(data.first_name[0]);
+                    handlePageWithError(0);
+                } else if (data.phone) {
+                    setBackendErrorMessagePhone(data.phone[0]);
+                    handlePageWithError(1);
+                } else if (data.email) {
+                    setBackendErrorMessageEmail(data.email[0])
+                    handlePageWithError(2);
+                } else {
+                    setBackendErrorMessagePassword(data.password1[0])
+                    handlePageWithError(3);
+                }
+                return;
+            } else {
+                navigation.navigate(SCREENS.AUTH.ACCOUNT_TYPE.ID);
+            }
+
+
+
+        } catch (error) {
+            console.log("ERROR: ", error);
+        }
+    };
 
     if (errors) {
         useEffect(() => {
@@ -82,7 +147,7 @@ export function preparePages({
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 error={errors.name}
-
+                                backendError={backendErrorMessageName}
                             />
                         )}
                     />
@@ -115,7 +180,7 @@ export function preparePages({
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 error={errors.phone}
-
+                                backendError={backendErrorMessagePhone}
                             />
 
                         )}
@@ -151,7 +216,7 @@ export function preparePages({
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 error={errors.mail}
-
+                                backendError={backendErrorMessageEmail}
                             />
                         )}
                     />
@@ -186,7 +251,7 @@ export function preparePages({
                                 secureTextEntry={true}
                                 onChangeText={onChange}
                                 error={errors.password}
-
+                                backendError={backendErrorMessagePassword}
                             />
                         )}
                     />

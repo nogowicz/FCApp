@@ -6,6 +6,9 @@ import {
     TouchableOpacity,
     SafeAreaView,
     Text,
+    ImageBackground,
+    Dimensions,
+    Image,
 } from 'react-native'
 import {
     useRef,
@@ -16,6 +19,16 @@ import Container from 'components/container';
 import ArrowLeft from 'assets/svg/arrow-left.svg'
 import BottomSheet, { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { colors, spacing, typography, constants } from 'styles';
+import Button from 'components/button';
+import AccountTypeOption from 'components/account-type-option';
+
+export const assets = [
+    require('assets/images/sygnet-logo.png'),
+    require('assets/images/manager-image.png'),
+    require('assets/images/player-image.png'),
+    require('assets/images/supporter-image.png'),
+    require('assets/images/organizer-image.png'),
+]
 
 export type AccountTypeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ACCOUNT_TYPE'>;
 
@@ -23,6 +36,7 @@ type AccountTypeProps = {
     navigation: AccountTypeScreenNavigationProp;
 }
 
+const { width } = Dimensions.get("window")
 
 export default function AccountType({ navigation }: AccountTypeProps) {
 
@@ -53,9 +67,60 @@ export default function AccountType({ navigation }: AccountTypeProps) {
                     snapPoints={snapPoints}
                     backgroundStyle={styles.bottomSheetBackground}
                     handleIndicatorStyle={{ backgroundColor: colors.COLORS.BACKGROUND }}
+                    style={styles.bottomSheetContainer}
 
                 >
+                    <ImageBackground
+                        source={assets[0]}
+                        style={styles.contentContainerSection}
+                    >
 
+                        <Text style={styles.contentContainerSectionTitleText}>Wybierz rodzaj konta</Text>
+
+                        <Text style={styles.contentContainerSectionSubTitleText}>
+                            Wybierz rodzaj swojego konta. W późniejszym etapie będzie możliwość zmiany lub dodania innych typów konta.
+                        </Text>
+                        <View>
+                            <AccountTypeOption
+                                onPress={() => console.log("Wybrano tryb konta: trener")}
+                                image={1}
+                                title='Trener'
+                                description='Zarządza drużynami, organizuje wydarzenia i wprowadza statystyki zawodników'
+                            />
+
+                            <AccountTypeOption
+                                onPress={() => console.log("Wybrano tryb konta: zawodnik")}
+                                image={2}
+                                title='Zawodnik'
+                                description='Dołącza do drużyny i bierze udział w sparingach oraz turniejach'
+                            />
+
+                            <AccountTypeOption
+                                onPress={() => console.log("Wybrano tryb konta: kibic")}
+                                image={3}
+                                title='Kibic'
+                                description='Obserwuje wydarzenia i drużyny, może być opiekunem gracza'
+                            />
+
+                            <AccountTypeOption
+                                onPress={() => console.log("Wybrano tryb konta: organizator")}
+                                image={4}
+                                title='Organizator'
+                                description='Tworzy i organizuje sparingi, turnieje i wydarzenia'
+                            />
+
+                        </View>
+                        <View>
+                            <Text style={styles.bottomText}>
+                                Tworząc konto zgadzasz się na warunki</Text>
+
+                            <Button
+                                text='Regulaminu i Polityki Prywatności'
+                                mode='simple'
+                                onPress={() => console.log("Regulamin i polityka prywatności")}
+                            />
+                        </View>
+                    </ImageBackground>
 
                 </BottomSheet>
             </View>
@@ -98,5 +163,36 @@ const styles = StyleSheet.create({
     titleRightContainer: {
         flex: 1,
     },
-
+    contentContainerSectionTitleText: {
+        ...typography.FONT_BOLD,
+        fontWeight: typography.FONT_WEIGHT_BOLD,
+        color: colors.COLORS.TEXT,
+        fontSize: typography.FONT_SIZE_18,
+        textAlign: 'center',
+    },
+    contentContainerSectionSubTitleText: {
+        ...typography.FONT_REGULAR,
+        fontWeight: typography.FONT_WEIGHT_REGULAR,
+        color: colors.COLORS.TEXT,
+        fontSize: typography.FONT_SIZE_14,
+        marginVertical: spacing.SCALE_20,
+        marginHorizontal: spacing.SCALE_50,
+    },
+    contentContainerSection: {
+        flex: 1,
+        width,
+        height: '100%',
+        justifyContent: 'space-between',
+        paddingVertical: spacing.SCALE_20,
+    },
+    bottomText: {
+        ...typography.FONT_REGULAR,
+        fontWeight: typography.FONT_WEIGHT_REGULAR,
+        color: colors.COLORS.TEXT,
+        fontSize: typography.FONT_SIZE_14,
+        textAlign: 'center',
+    },
+    bottomSheetContainer: {
+        alignItems: 'center',
+    },
 });

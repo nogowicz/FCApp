@@ -11,7 +11,7 @@ export default function AuthStack() {
 
     return (
         <Stack.Navigator
-            initialRouteName={SCREENS.AUTH.WELCOME.ID}
+            initialRouteName={SCREENS.AUTH.ACCOUNT_TYPE.ID}
             screenOptions={{
                 headerShown: false,
                 animation: 'slide_from_right'

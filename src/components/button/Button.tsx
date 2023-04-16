@@ -56,8 +56,9 @@ export default function Button({ text, activeOpacity = 0.7, mode, onPress, icon 
         <TouchableOpacity
             activeOpacity={activeOpacity}
             style={styles.simpleButtonContainer}
+            onPress={onPress}
         >
-            <Text style={styles.buttonText}>{text}</Text>
+            <Text style={styles.simpleButtonText}>{text}</Text>
         </TouchableOpacity>
     )
 
@@ -77,9 +78,15 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         ...typography.FONT_REGULAR,
-        color: colors.COLORS.HINT,
         fontWeight: typography.FONT_WEIGHT_REGULAR,
         fontSize: typography.FONT_SIZE_16,
+        color: colors.COLORS.HINT,
+    },
+    simpleButtonText: {
+        ...typography.FONT_REGULAR,
+        fontWeight: typography.FONT_WEIGHT_REGULAR,
+        fontSize: typography.FONT_SIZE_14,
+        color: colors.COLORS.PRIMARY,
     },
     outlinedButtonLeftContainer: {
         flex: 1,

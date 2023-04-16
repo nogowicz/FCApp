@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 
-export const assets = [require('assets/images/background-img.png')]
+const assets = [require('assets/images/background-img.png')]
 
 const { width } = Dimensions.get("window")
 
