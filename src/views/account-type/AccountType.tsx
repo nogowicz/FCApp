@@ -112,7 +112,7 @@ export default function AccountType({ navigation }: AccountTypeProps) {
                             />
 
                         </View>
-                        <View>
+                        <View style={styles.bottomTextContainer}>
                             <Text style={styles.bottomText}>
                                 Tworząc konto zgadzasz się na warunki</Text>
 
@@ -150,8 +150,7 @@ const styles = StyleSheet.create({
         ...typography.FONT_BOLD,
         color: colors.COLORS.TEXT,
         fontWeight: typography.FONT_WEIGHT_BOLD,
-        fontSize: 55,
-
+        fontSize: typography.FONT_SIZE_55,
     },
 
     bottomSheetBackground: {
@@ -177,7 +176,6 @@ const styles = StyleSheet.create({
         fontWeight: typography.FONT_WEIGHT_REGULAR,
         color: colors.COLORS.TEXT,
         fontSize: typography.FONT_SIZE_14,
-        marginVertical: spacing.SCALE_20,
         marginHorizontal: spacing.SCALE_50,
     },
     contentContainerSection: {
@@ -185,7 +183,6 @@ const styles = StyleSheet.create({
         width,
         height: '100%',
         justifyContent: 'space-between',
-        paddingVertical: spacing.SCALE_20,
     },
     bottomText: {
         ...typography.FONT_REGULAR,
@@ -197,4 +194,7 @@ const styles = StyleSheet.create({
     bottomSheetContainer: {
         alignItems: 'center',
     },
+    bottomTextContainer: {
+        marginBottom: spacing.SCALE_20,
+    }
 });
