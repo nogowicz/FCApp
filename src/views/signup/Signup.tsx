@@ -59,7 +59,9 @@ export default function Signup({ navigation }: SignupProps) {
     return (
         <SafeAreaView style={styles.root}>
 
-            <View style={styles.container}>
+            <View style={styles.container}
+
+            >
 
                 <Container>
                     <View style={styles.titleContainer}>

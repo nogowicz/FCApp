@@ -12,7 +12,7 @@ import {
 
 const assets = [require('assets/images/background-img.png')]
 
-const { width } = Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
 type ContainerProps = {
     children: ReactNode,
@@ -46,8 +46,8 @@ export default function Container({ children }: ContainerProps) {
 const styles = StyleSheet.create({
     imageBackground: {
         width,
-        height: '70%',
-        zIndex: -1,
+        height: height / 2,
+        zIndex: -2,
     },
 
 });
