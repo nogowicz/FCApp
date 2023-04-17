@@ -20,7 +20,7 @@ type TextFieldProps = {
     props?: TextInputProps;
     value: string,
     onBlur?: () => void,
-    onChangeText: (value: any) => void,
+    onChangeText: (value: any) => any,
     error?: any;
     secureTextEntry?: boolean,
     backendError?: string

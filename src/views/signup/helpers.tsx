@@ -36,10 +36,10 @@ export function preparePages({
     handleNextPage,
     handlePageWithError
 }: PreparePagesType) {
-    const [backendErrorMessageName, setBackendErrorMessageName] = useState();
-    const [backendErrorMessagePhone, setBackendErrorMessagePhone] = useState();
-    const [backendErrorMessageEmail, setBackendErrorMessageEmail] = useState();
-    const [backendErrorMessagePassword, setBackendErrorMessagePassword] = useState();
+    const [backendErrorMessageName, setBackendErrorMessageName] = useState<string>();
+    const [backendErrorMessagePhone, setBackendErrorMessagePhone] = useState<string>();
+    const [backendErrorMessageEmail, setBackendErrorMessageEmail] = useState<string>();
+    const [backendErrorMessagePassword, setBackendErrorMessagePassword] = useState<string>();
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -59,7 +59,6 @@ export function preparePages({
         mail: string;
         password: string;
     }
-
 
 
     const onSubmit = async (formData: FormDataProps) => {
@@ -148,7 +147,10 @@ export function preparePages({
                                 children={<Person />}
                                 value={value}
                                 onBlur={onBlur}
-                                onChangeText={onChange}
+                                onChangeText={(value) => {
+                                    onChange(value)
+                                    setBackendErrorMessageEmail('');
+                                }}
                                 error={errors.name}
                                 backendError={backendErrorMessageName}
                             />
@@ -181,7 +183,10 @@ export function preparePages({
                                 children={<Phone />}
                                 value={value}
                                 onBlur={onBlur}
-                                onChangeText={onChange}
+                                onChangeText={(value) => {
+                                    onChange(value)
+                                    setBackendErrorMessagePhone('');
+                                }}
                                 error={errors.phone}
                                 backendError={backendErrorMessagePhone}
                             />
@@ -217,7 +222,10 @@ export function preparePages({
                                 children={<Mail />}
                                 value={value}
                                 onBlur={onBlur}
-                                onChangeText={onChange}
+                                onChangeText={(value) => {
+                                    onChange(value)
+                                    setBackendErrorMessageEmail('');
+                                }}
                                 error={errors.mail}
                                 backendError={backendErrorMessageEmail}
                             />
@@ -252,7 +260,10 @@ export function preparePages({
                                 value={value}
                                 onBlur={onBlur}
                                 secureTextEntry={true}
-                                onChangeText={onChange}
+                                onChangeText={(value) => {
+                                    onChange(value)
+                                    setBackendErrorMessagePassword('');
+                                }}
                                 error={errors.password}
                                 backendError={backendErrorMessagePassword}
                             />

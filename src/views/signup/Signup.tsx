@@ -8,6 +8,8 @@ import {
     View,
     Text,
     TouchableOpacity,
+    TextInput,
+    KeyboardAvoidingView
 } from 'react-native'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'views/navigation/Navigation';
@@ -56,7 +58,9 @@ export default function Signup({ navigation }: SignupProps) {
 
     return (
         <SafeAreaView style={styles.root}>
+
             <View style={styles.container}>
+
                 <Container>
                     <View style={styles.titleContainer}>
                         <View style={styles.titleLeftContainer}>
@@ -83,8 +87,8 @@ export default function Signup({ navigation }: SignupProps) {
                     snapPoints={snapPoints}
                     backgroundStyle={styles.bottomSheetBackground}
                     handleIndicatorStyle={{ backgroundColor: colors.COLORS.BACKGROUND }}
-
                 >
+
                     <Panel
                         {...pages[page]}
                         step={page + 1}
@@ -92,9 +96,10 @@ export default function Signup({ navigation }: SignupProps) {
                     />
 
                 </BottomSheet>
-            </View>
 
+            </View>
         </SafeAreaView>
+
 
     );
 }
