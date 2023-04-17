@@ -71,7 +71,8 @@ export function preparePages({
                 phone: formData.phone,
                 email: formData.mail,
                 password1: formData.password,
-                password2: formData.password
+                password2: formData.password,
+                language: 1,
             }
 
             const response = await fetch('https://api.dev.footballchallengeapp.com/auth/registration/', {
